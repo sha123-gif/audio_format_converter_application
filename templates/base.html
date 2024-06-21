@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask Audio Converter{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for background and text */
+        
+        body {
+            background-color: #f0f0f0;
+            /* Light gray background */
+            color: #333;
+            /* Dark text color */
+            font-family: Arial, sans-serif;
+            /* Specify your preferred font-family */
+            padding-top: 60px;
+            /* Adjust padding for fixed navbar if used */
+            background: url('/static/pexels-photo-6594387.jpeg')no-repeat center center/cover;
+            height: 100vh;
+            font-style: bold;
+        }
+        
+        .content {
+            background-color: #fff;
+            /* White content background */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Soft shadow effect */
+        }
+        
+        .navbar {
+            background-color: black;
+            /* Bootstrap primary color for navbar */
+        }
+        
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: white;
+            font-style: bold;
+            /* White text for navbar brand and links */
+        }
+        
+        .navbar-brand:hover,
+        .navbar-nav .nav-link:hover {
+            color: white;
+            /* Lighter color on hover */
+        }
+        
+        .alert {
+            font-weight: bold;
+            /* Make alert text bold */
+            color: #fff;
+            /* White text color */
+            background-color: #dc3545;
+            /* Bootstrap danger color for alert */
+            border-color: #dc3545;
+            /* Border color */
+        }
+        /* Bold and white color for initial links */
+        
+        .initial-link {
+            font-weight: bold;
+            color: #fff !important;
+            /* Important to override Bootstrap's default */
+        }
+        
+        .initial-link:hover {
+            color: #f0f0f0 !important;
+            /* Lighter color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Flask Audio Converter</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link initial-link" href="{{ url_for('upload_file') }}">Upload & Convert</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link initial-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link initial-link" href="{{ url_for('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link initial-link" href="{{ url_for('register') }}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
